@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Generador de cuentos infantiles</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" href="lib/deck.js/core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" href="lib/deck.js/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" href="lib/deck.js/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" href="lib/deck.js/extensions/status/deck.status.css">
+  <link rel="stylesheet" href="lib/deck.js/extensions/hash/deck.hash.css">
+  <link rel="stylesheet" href="lib/deck.js/extensions/scale/deck.scale.css">
+  <link rel="stylesheet" href="lib/deck.automatic.js/automatic/deck.automatic.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" href="lib/deck.js/themes/style/web-2.0.css">
+
+  <link rel="stylesheet" href="css/deck.narrator.css">
+
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" href="lib/deck.js/themes/transition/horizontal-slide.css">
+
+  <!-- Required Modernizr file -->
+  <script src="lib/deck.js/modernizr.custom.js"></script>
+</head>
+<body class="deck-container">
+
+<section class="story-generator" id="story-generator" aria-labelledby="generator-title">
+  <div class="story-generator-card">
+    <p class="story-generator-kicker">Un cuento hecho por ti</p>
+    <h2 id="generator-title">Vamos a crear una aventura</h2>
+    <button class="generator-palette-button" id="palette-button" type="button">Paleta de colores</button>
+
+    <form id="story-setup-form" class="generator-form">
+      <label for="story-name">Nombre del cuento</label>
+      <input id="story-name" name="storyName" type="text" maxlength="100" placeholder="Ej. El bosque de las luciérnagas" required>
+
+      <label for="image-count">¿Cuántas imágenes tendrá?</label>
+      <input id="image-count" name="imageCount" type="number" min="1" max="100" step="1" placeholder="14" required>
+      <p class="generator-hint">Se usarán imagenes/1.jpg, imagenes/2.jpg y así sucesivamente. Coloca esos archivos en la carpeta <code>imagenes</code>.</p>
+      <p class="generator-hint">Audio compatible: MP3, OGG/Opus, WAV, M4A, AAC, WebM y FLAC desde la carpeta <code>audio</code>. El HTML descargado conserva las referencias, no copia los archivos.</p>
+
+      <button class="generator-button" type="submit">Continuar</button>
+    </form>
+
+    <form id="story-timing-form" class="generator-form" hidden>
+      <p class="generator-hint">Indica cuánto dura cada imagen. El inicio se calcula en orden, sumando la duración de la portada y de las imágenes anteriores.</p>
+      <div class="slide-timing-fields" id="slide-timing-fields"></div>
+      <div class="generator-actions">
+        <button class="generator-button generator-button-secondary" id="timing-back" type="button">Volver</button>
+        <button class="generator-button" type="submit">Descargar cuento</button>
+      </div>
+    </form>
+
+    <p class="generator-feedback" id="generator-feedback" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Las diapositivas de imágenes se crean al completar el asistente. -->
+
+<section class="slide story-cover" data-narrator-duration="7" data-duration="7000">
+  <div class="story-cover-content">
+    <p class="story-cover-kicker">¡Abre bien los ojos!</p>
+    <h1 id="story-title">Tu cuento comienza aquí</h1>
+    <p class="story-cover-subtitle">Una aventura mágica llena de sorpresas</p>
+    <footer>¡Pulsa Play y comienza el cuento!</footer>
+  </div>
+</section>
+
+
+
+
+<!-- deck.navigation snippet -->
+		      
+	 <div aria-role="navigation"> <a href="#" class="deck-prev-link" title="Previa">←</a>
+        <a href="#" class="deck-next-link" title="Próxima">→</a> </div>
+<!-- deck.status snippet -->
+<p class="deck-status">
+  <span class="deck-status-current"></span>
+  /
+  <span class="deck-status-total"></span>
+</p>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink"></a>
+
+<!-- deck.narrator snippet -->
+<audio controls class="deck-narrator-audio" id="narrator-audio">
+  <source src="audio/audio.mp3" type="audio/mpeg" />
+  <source src="audio/audio.ogg" type="audio/ogg" />
+  <source src="audio/audio.opus" type="audio/ogg; codecs=opus" />
+  <source src="audio/audio.wav" type="audio/wav" />
+  <source src="audio/audio.m4a" type="audio/mp4" />
+  <source src="audio/audio.aac" type="audio/aac" />
+  <source src="audio/audio.webm" type="audio/webm" />
+  <source src="audio/audio.flac" type="audio/flac" />
+</audio>
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="lib/deck.js/jquery.min.js"></script>
+<script src="lib/deck.js/core/deck.core.js"></script>
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="lib/deck.js/extensions/hash/deck.hash.js"></script>
+<script src="lib/deck.js/extensions/menu/deck.menu.js"></script>
+<script src="lib/deck.js/extensions/status/deck.status.js"></script>
+<script src="lib/deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="lib/deck.js/extensions/scale/deck.scale.js"></script>
+<script src="lib/deck.automatic.js/automatic/deck.automatic.js"></script>
+<script src="js/deck.narrator.js"></script>
+<script src="js/story.generator.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.extend(true, $.deck.defaults, {
+      automatic: {
+        startRunning: false,
+        cycle: false
+      }
+    });
+  });
+</script>
+</body>
+</html>
